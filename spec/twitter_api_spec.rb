@@ -1,11 +1,7 @@
 require "spec_helper"
 
-describe TwitterApi do
+describe TwitterAPI do
   it "has a version number" do
-    expect(TwitterApi::VERSION).not_to be nil
-  end
-
-  it "does something useful" do
-    expect(false).to eq(true)
+    expect(TwitterAPI::VERSION).not_to be nil
   end
 end

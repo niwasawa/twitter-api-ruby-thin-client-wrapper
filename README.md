@@ -1,8 +1,4 @@
-# TwitterApi
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/twitter_api`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+# Twitter API Ruby thin client wrapper library
 
 ## Installation
 
@@ -22,18 +18,52 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'twitter_api'
+require 'json'
 
-## Development
+# create a instance of API wrapper
+t = TwitterAPI::Client.new({
+  :consumer_key => 'YOUR_CONSUMER_KEY',
+  :consumer_secret => 'YOUR_CONSUMER_SECRET',
+  :token => 'YOUR_ACCESS_TOKEN',
+  :token_secret => 'YOUR_ACCESS_SECRET'
+})
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+# call GET statuses/user_timeline
+res = t.get('https://api.twitter.com/1.1/statuses/user_timeline.json', {
+  'screen_name' => 'niwasawa',
+  'count' => '1'
+})
+puts res.headers
+puts JSON.parse(res.body)
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+# call GET statuses/user_timeline
+res = t.statuses_user_timeline({
+  'screen_name' => 'niwasawa',
+  'count' => '1'
+})
+puts res.headers
+puts JSON.parse(res.body)
+
+# call POST statuses/update
+res = t.post('https://api.twitter.com/1.1/statuses/update.json', {
+  'status' => "hello, world #{Time.now.to_i}"
+})
+puts res.headers
+puts JSON.parse(res.body)
+
+# call POST statuses/update
+res = t.statuses_update({
+  'status' => "hello, world #{Time.now.to_i}"
+})
+puts res.headers
+puts JSON.parse(res.body)
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/twitter_api. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
+Bug reports and pull requests are welcome on GitHub at https://github.com/niwasawa/twitter-api-ruby-thin-client-wrapper. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
