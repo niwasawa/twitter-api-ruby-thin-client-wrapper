@@ -1,5 +1,7 @@
 # Twitter API Ruby thin client wrapper library
 
+[![Gem Version](https://badge.fury.io/rb/twitter_api.svg)](https://badge.fury.io/rb/twitter_api)
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -60,6 +62,11 @@ res = t.statuses_update({
 puts res.headers
 puts JSON.parse(res.body)
 ```
+
+## Documentation
+
+Reference Documentation — Twitter Developers
+https://dev.twitter.com/rest/reference
 
 ## Contributing
 
