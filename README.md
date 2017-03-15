@@ -72,6 +72,9 @@ puts JSON.pretty_generate(JSON.parse(res.body))
 
 ## Documentation
 
+Documentation for twitter_api
+http://www.rubydoc.info/gems/twitter_api/
+
 Reference Documentation — Twitter Developers
 https://dev.twitter.com/rest/reference
 
