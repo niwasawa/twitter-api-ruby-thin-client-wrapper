@@ -5,30 +5,41 @@ require 'open-uri'
 require 'simple_oauth'
 
 # Twitter API Ruby thin client wrapper library
+# {https://github.com/niwasawa/twitter-api-ruby-thin-client-wrapper}
 module TwitterAPI
 
+  # A client class.
   class Client
 
+    # Initializes a Client object.
+    #
+    # @param credentials [Hash] Credentials
+    # @return [TwitterAPI::Client]
     def initialize(credentials)
       @credentials = credentials
     end
 
-    def authorization(method, url, params)
-      SimpleOAuth::Header.new(method, url, params, @credentials).to_s
-    end
-
-    # @return StringIO or Tempfile
-    def get(base_url, params)
-      headers = {'Authorization' => authorization('GET', base_url, params)}
-      url = base_url + '?' + URI.encode_www_form(params)
+    # Calls a Twitter REST API using GET method.
+    #
+    # @param resource_url [String] Resource URL
+    # @param params [Hash] Parameters
+    # @return [TwitterAPI::Response]
+    def get(resource_url, params)
+      headers = {'Authorization' => authorization('GET', resource_url, params)}
+      url = resource_url + '?' + URI.encode_www_form(params)
       res = open(url, headers)
       Response.new(res)
     end
 
-    # @return Net::HTTPResponse
-    def post(base_url, params, data=nil)
-      headers = {'Authorization' => authorization('POST', base_url, params)}
-      url = base_url + '?' + URI.encode_www_form(params)
+    # Calls a Twitter REST API using POST method.
+    #
+    # @param resource_url [String] Resource URL
+    # @param params [Hash] Parameters
+    # @param data [String] Posts data
+    # @return [TwitterAPI::Response]
+    def post(resource_url, params, data=nil)
+      headers = {'Authorization' => authorization('POST', resource_url, params)}
+      url = resource_url + '?' + URI.encode_www_form(params)
       uri = URI.parse(url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
@@ -37,55 +48,91 @@ module TwitterAPI
       Response.new(res)
     end
 
-    # GET search/tweets — Twitter Developers
-    # https://dev.twitter.com/rest/reference/get/search/tweets
+    # GET search/tweets
+    # {https://dev.twitter.com/rest/reference/get/search/tweets}
+    #
+    # @param params [Hash] Parameters
+    # @return [TwitterAPI::Response]
     def search_tweets(params)
-      base_url = 'https://api.twitter.com/1.1/search/tweets.json'
-      get(base_url, params)
+      resource_url = 'https://api.twitter.com/1.1/search/tweets.json'
+      get(resource_url, params)
     end
 
-    # GET statuses/mentions_timeline — Twitter Developers
-    # https://dev.twitter.com/rest/reference/get/statuses/mentions_timeline
+    # GET statuses/mentions_timeline
+    # {https://dev.twitter.com/rest/reference/get/statuses/mentions_timeline}
+    #
+    # @param params [Hash] Parameters
+    # @return [TwitterAPI::Response]
     def statuses_mentions_timeline(params)
-      base_url = 'https://api.twitter.com/1.1/statuses/mentions_timeline.json'
-      get(base_url, params)
+      resource_url = 'https://api.twitter.com/1.1/statuses/mentions_timeline.json'
+      get(resource_url, params)
     end
 
-    # GET statuses/user_timeline — Twitter Developers
-    # https://dev.twitter.com/rest/reference/get/statuses/user_timeline
+    # GET statuses/user_timeline
+    # {https://dev.twitter.com/rest/reference/get/statuses/user_timeline}
+    #
+    # @param params [Hash] Parameters
+    # @return [TwitterAPI::Response]
     def statuses_user_timeline(params)
-      base_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json'
-      get(base_url, params)
+      resource_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json'
+      get(resource_url, params)
     end
 
-    # POST statuses/update — Twitter Developers
-    # https://dev.twitter.com/rest/reference/post/statuses/update
+    # POST statuses/update
+    # {https://dev.twitter.com/rest/reference/post/statuses/update}
+    #
+    # @param params [Hash] Parameters
+    # @return [TwitterAPI::Response]
     def statuses_update(params)
-      base_url = 'https://api.twitter.com/1.1/statuses/update.json'
-      post(base_url, params)
+      resource_url = 'https://api.twitter.com/1.1/statuses/update.json'
+      post(resource_url, params)
     end
+
+    private
+
+    # Returns string of authorization.
+    #
+    # @param method [String] A HTTP method
+    # @param url [String] A URL
+    # @param params [Hash] Parameters
+    # @return [String]
+    def authorization(method, url, params)
+      SimpleOAuth::Header.new(method, url, params, @credentials).to_s
+    end
+
   end
 
+  # A HTTP Response class.
   class Response
 
+    # Initializes a Response object.
+    #
+    # @param res [StringIO]
+    # @param res [Tempfile]
+    # @return [TwitterAPI::Client]
     def initialize(res)
       @res = res
     end
 
-    # @return Net::HTTPHeader or Hash
+    # Returns HTTP headers.
+    #
+    # @return [Net::HTTPHeader]
+    # @return [Hash]
     def headers
       if @res.kind_of?(Net::HTTPResponse)
-        @res
+        @res # Net::HTTPHeader
       elsif @res.kind_of?(StringIO)
-        @res.meta
+        @res.meta # Hash
       elsif @res.kind_of?(Tempfile)
-        @res.meta
+        @res.meta # Hash
       else
         nil
       end
     end
 
-    # @return String
+    # Returns HTTP body.
+    #
+    # @return [String]
     def body
       if @res.kind_of?(Net::HTTPResponse)
         @res.body
