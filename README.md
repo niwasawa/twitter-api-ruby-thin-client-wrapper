@@ -38,7 +38,7 @@ res = t.get('https://api.twitter.com/1.1/statuses/user_timeline.json', {
   'count' => '1'
 })
 puts res.headers
-puts JSON.parse(res.body)
+puts JSON.pretty_generate(JSON.parse(res.body))
 
 # call GET statuses/user_timeline
 res = t.statuses_user_timeline({
@@ -46,21 +46,28 @@ res = t.statuses_user_timeline({
   'count' => '1'
 })
 puts res.headers
-puts JSON.parse(res.body)
+puts JSON.pretty_generate(JSON.parse(res.body))
 
 # call POST statuses/update
 res = t.post('https://api.twitter.com/1.1/statuses/update.json', {
   'status' => "hello, world #{Time.now.to_i}"
 })
 puts res.headers
-puts JSON.parse(res.body)
+puts JSON.pretty_generate(JSON.parse(res.body))
 
 # call POST statuses/update
 res = t.statuses_update({
   'status' => "hello, world #{Time.now.to_i}"
 })
 puts res.headers
-puts JSON.parse(res.body)
+puts JSON.pretty_generate(JSON.parse(res.body))
+
+# call GET statues/mention_timeline
+res = t.statuses_mentions_timeline({
+  'count' => '1'
+})
+puts res.headers
+puts JSON.pretty_generate(JSON.parse(res.body))
 ```
 
 ## Documentation

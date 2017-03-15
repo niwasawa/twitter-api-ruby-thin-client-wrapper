@@ -44,6 +44,13 @@ module TwitterAPI
       get(base_url, params)
     end
 
+    # GET statuses/mentions_timeline — Twitter Developers
+    # https://dev.twitter.com/rest/reference/get/statuses/mentions_timeline
+    def statuses_mentions_timeline(params)
+      base_url = 'https://api.twitter.com/1.1/statuses/mentions_timeline.json'
+      get(base_url, params)
+    end
+
     # GET statuses/user_timeline — Twitter Developers
     # https://dev.twitter.com/rest/reference/get/statuses/user_timeline
     def statuses_user_timeline(params)
