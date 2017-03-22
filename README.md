@@ -71,6 +71,19 @@ http://www.rubydoc.info/gems/twitter_api/
 Reference Documentation — Twitter Developers
 https://dev.twitter.com/rest/reference
 
+## Development
+
+```sh
+$ rake -T
+rake build            # Build twitter_api-X.X.X.gem into the pkg directory
+rake clean            # Remove any temporary products
+rake clobber          # Remove any generated files
+rake install          # Build and install twitter_api-X.X.X.gem into system gems
+rake install:local    # Build and install twitter_api-X.X.X.gem into system gems without network access
+rake release[remote]  # Create tag vX.X.X and build and push twitter_api-X.X.X.gem to Rubygems
+rake spec             # Run RSpec code examples
+```
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/niwasawa/twitter-api-ruby-thin-client-wrapper. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
