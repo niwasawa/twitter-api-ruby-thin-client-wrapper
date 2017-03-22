@@ -58,13 +58,6 @@ describe TwitterAPI::Client do
     expect(t.statuses_mentions_timeline(params)).not_to be nil
   end
 
-  it 'has a method statuses_update' do
-    params = {
-      'status' => 'The text of your status update, typically up to 140 characters.'
-    }
-    expect(t.statuses_update(params)).not_to be nil
-  end
-
   it 'has a method statuses_show_id' do
     params = {
       'id' => '00000000',
@@ -80,5 +73,12 @@ describe TwitterAPI::Client do
     expect(t.statuses_user_timeline(params)).not_to be nil
   end
 
+  it 'has a method statuses_update' do
+    params = {
+      'status' => 'The text of your status update, typically up to 140 characters.'
+    }
+    expect(t.statuses_update(params)).not_to be nil
+  end
+ 
 end
 
