@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'open-uri'
 require 'stringio'
 
 describe TwitterAPI do
