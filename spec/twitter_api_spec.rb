@@ -65,6 +65,13 @@ describe TwitterAPI::Client do
     expect(t.statuses_update(params)).not_to be nil
   end
 
+  it 'has a method statuses_show_id' do
+    params = {
+      'id' => '00000000',
+    }
+    expect(t.statuses_show_id(params)).not_to be nil
+  end
+
   it 'has a method statuses_user_timeline' do
     params = {
       'screen_name' => 'YOUR_SCREEN_NAME',
