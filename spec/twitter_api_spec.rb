@@ -1,8 +1,8 @@
-require "spec_helper"
-require "stringio"
+require 'spec_helper'
+require 'stringio'
 
 describe TwitterAPI do
-  it "has a version number" do
+  it 'has a version number' do
     expect(TwitterAPI::VERSION).not_to be nil
   end
 end
