@@ -43,6 +43,13 @@ describe TwitterAPI::Client do
     expect(t.post(resource_url, params)).not_to be nil
   end
 
+  it 'has a method geo_id_place_id' do
+    params = {
+      'place_id' => '0000000000000000'
+    }
+    expect(t.geo_id_place_id(params)).not_to be nil
+  end
+ 
   it 'has a method search_tweets' do
     params = {
       'q' => 'search query',

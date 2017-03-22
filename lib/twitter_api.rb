@@ -48,6 +48,16 @@ module TwitterAPI
       Response.new(res)
     end
 
+    # GET geo/id/:place_id
+    # {https://dev.twitter.com/rest/reference/get/geo/id/place_id}
+    #
+    # @param params [Hash] Parameters
+    # @return [TwitterAPI::Response]
+    def geo_id_place_id(params)
+      resource_url = "https://api.twitter.com/1.1/geo/id/#{params['place_id']}.json"
+      get(resource_url, params)
+    end
+ 
     # GET search/tweets
     # {https://dev.twitter.com/rest/reference/get/search/tweets}
     #
