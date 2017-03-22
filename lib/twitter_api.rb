@@ -68,6 +68,16 @@ module TwitterAPI
       get(resource_url, params)
     end
 
+    # GET statuses/show/:id
+    # {https://dev.twitter.com/rest/reference/get/statuses/show/id}
+    #
+    # @param params [Hash] Parameters
+    # @return [TwitterAPI::Response]
+    def statuses_show_id(params)
+      resource_url = 'https://api.twitter.com/1.1/statuses/show.json'
+      get(resource_url, params)
+    end
+ 
     # GET statuses/user_timeline
     # {https://dev.twitter.com/rest/reference/get/statuses/user_timeline}
     #
