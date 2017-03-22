@@ -3,6 +3,7 @@ require 'twitter_api/version'
 require 'net/https'
 require 'open-uri'
 require 'simple_oauth'
+require 'tempfile'
 
 # Twitter API Ruby thin client wrapper library
 # {https://github.com/niwasawa/twitter-api-ruby-thin-client-wrapper}
@@ -132,6 +133,8 @@ module TwitterAPI
     # @return [TwitterAPI::Client]
     def initialize(res)
       @res = res
+      @headers = make_headers
+      @body = make_body
     end
 
     # Returns HTTP headers.
@@ -139,6 +142,23 @@ module TwitterAPI
     # @return [Net::HTTPHeader]
     # @return [Hash]
     def headers
+      @headers
+    end
+
+    # Returns HTTP body.
+    #
+    # @return [String]
+    def body
+      @body
+    end
+
+    private
+ 
+    # Returns HTTP headers.
+    #
+    # @return [Net::HTTPHeader]
+    # @return [Hash]
+    def make_headers
       if @res.kind_of?(Net::HTTPResponse)
         @res # Net::HTTPHeader
       elsif @res.kind_of?(StringIO)
@@ -153,7 +173,7 @@ module TwitterAPI
     # Returns HTTP body.
     #
     # @return [String]
-    def body
+    def make_body
       if @res.kind_of?(Net::HTTPResponse)
         @res.body
       elsif @res.kind_of?(StringIO)
