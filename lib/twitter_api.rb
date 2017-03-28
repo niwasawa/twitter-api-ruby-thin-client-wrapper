@@ -99,6 +99,16 @@ module TwitterAPI
       get(resource_url, params)
     end
 
+    # GET users/lookup
+    # {https://dev.twitter.com/rest/reference/get/users/lookup}
+    #
+    # @param params [Hash] Parameters
+    # @return [TwitterAPI::Response]
+    def users_lookup(params)
+      resource_url = 'https://api.twitter.com/1.1/users/lookup.json'
+      get(resource_url, params)
+    end
+
     # POST statuses/update
     # {https://dev.twitter.com/rest/reference/post/statuses/update}
     #

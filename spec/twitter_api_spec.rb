@@ -81,6 +81,13 @@ describe TwitterAPI::Client do
     expect(t.statuses_user_timeline(params)).not_to be nil
   end
 
+  it 'has a method users_lookup' do
+    params = {
+      'screen_name' => 'YOUR_SCREEN_NAME'
+    }
+    expect(t.users_lookup(params)).not_to be nil
+  end
+
   it 'has a method statuses_update' do
     params = {
       'status' => 'The text of your status update, typically up to 140 characters.'
