@@ -8,12 +8,31 @@ describe TwitterAPI do
   end
 end
 
-# mock
-module Kernel
-  def open(name, *rest, &block)
+# for mock
+class Dummy
+  def self.JSON
     # a dummy of JSON response
     io = StringIO.new('[{}]')
     OpenURI::Meta.init(io)
+  end
+end
+
+# mock
+module Kernel
+  def open(name, *rest, &block)
+    Dummy.JSON
+  end
+end
+
+# mock
+module Net
+  class HTTP
+    def request_post(path, data, header = nil)
+      Dummy.JSON
+    end
+    def request(request, data = nil)
+      Dummy.JSON
+    end
   end
 end
 
@@ -86,6 +105,13 @@ describe TwitterAPI::Client do
       'screen_name' => 'YOUR_SCREEN_NAME'
     }
     expect(t.users_lookup(params)).not_to be nil
+  end
+
+  it 'has a method media_upload' do
+    params = {
+      'media' => 'IMAGE_RAW_BINARY'
+    }
+    expect(t.media_upload(params)).not_to be nil
   end
 
   it 'has a method statuses_update' do
