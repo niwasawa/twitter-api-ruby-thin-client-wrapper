@@ -242,7 +242,7 @@ module TwitterAPI
     #
     # @param res [StringIO]
     # @param res [Tempfile]
-    # @return [TwitterAPI::Client]
+    # @return [TwitterAPI::Response]
     def initialize(res)
       @res = res
       @headers = make_headers
