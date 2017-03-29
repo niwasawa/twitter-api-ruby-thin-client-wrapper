@@ -55,15 +55,19 @@ module TwitterAPI
     # @param params [Hash] Parameters
     # @param data [Array] Posts Multipart data
     # @return [TwitterAPI::Response]
-    def post_multipart(resource_url, params, data=[])
+    def post_multipart(resource_url, params, data={})
       headers = {'Authorization' => authorization('POST', resource_url, params)}
       url = resource_url + '?' + URI.encode_www_form(params)
       uri = URI.parse(url)
+      form_data = []
+      data.each{|k,v|
+        form_data << [k,v]
+      }
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       req = Net::HTTP::Post.new(uri.request_uri, headers)
-      req.set_form(data, 'multipart/form-data')
+      req.set_form(form_data, 'multipart/form-data')
       res = http.start{|h|
         h.request(req)
       }
@@ -137,11 +141,7 @@ module TwitterAPI
     # @return [TwitterAPI::Response]
     def media_upload(params)
       resource_url = 'https://upload.twitter.com/1.1/media/upload.json'
-      data = []
-      params.each{|k,v|
-        data << [k,v]
-      }
-      post_multipart(resource_url, {}, data)
+      post_multipart(resource_url, {}, params)
     end
 
     # POST statuses/update
@@ -198,7 +198,7 @@ module TwitterAPI
     end
 
     private
- 
+
     # Returns HTTP headers.
     #
     # @return [Net::HTTPHeader]
