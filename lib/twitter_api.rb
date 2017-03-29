@@ -233,18 +233,6 @@ module TwitterAPI
       post(resource_url, params)
     end
 
-    private
-
-    # Returns string of authorization.
-    #
-    # @param method [String] A HTTP method
-    # @param url [String] A URL
-    # @param params [Hash] Parameters
-    # @return [String]
-    def authorization(method, url, params)
-      SimpleOAuth::Header.new(method, url, params, @credentials).to_s
-    end
-
   end
 
   # A HTTP Response class.
