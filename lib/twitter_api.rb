@@ -186,6 +186,7 @@ module TwitterAPI
 
     # Initializes a Response object.
     #
+    # @param res [Net::HTTPResponse]
     # @param res [StringIO]
     # @param res [Tempfile]
     # @return [TwitterAPI::Response]
