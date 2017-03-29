@@ -9,15 +9,94 @@ require 'tempfile'
 # {https://github.com/niwasawa/twitter-api-ruby-thin-client-wrapper}
 module TwitterAPI
 
+  # A base client class.
+  class BaseClient
+
+    # Initializes a BaseClient object.
+    #
+    # @param credentials [Hash] Credentials
+    # @return [TwitterAPI::BaseClient]
+    def initialize(credentials)
+      @credentials = credentials
+    end
+
+    # Calls a Twitter REST API using GET method.
+    #
+    # @param resource_url [String] Resource URL
+    # @param params [Hash] Parameters
+    # @return [TwitterAPI::Response]
+    def get(resource_url, params)
+      headers = {'Authorization' => authorization('GET', resource_url, params)}
+      url = resource_url + '?' + URI.encode_www_form(params)
+      res = open(url, headers)
+      Response.new(res)
+    end
+
+    # Calls a Twitter REST API using POST method.
+    #
+    # @param resource_url [String] Resource URL
+    # @param params [Hash] Parameters
+    # @param data [String] Posts data
+    # @return [TwitterAPI::Response]
+    def post(resource_url, params, data=nil)
+      headers = {'Authorization' => authorization('POST', resource_url, params)}
+      url = resource_url + '?' + URI.encode_www_form(params)
+      uri = URI.parse(url)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      res = http.request_post(url, data, headers)
+      Response.new(res)
+    end
+
+    # Calls a Twitter REST API using POST (multipart/form-data) method.
+    #
+    # @param resource_url [String] Resource URL
+    # @param params [Hash] Parameters
+    # @param data [Array] Posts Multipart data
+    # @return [TwitterAPI::Response]
+    def post_multipart(resource_url, params, data={})
+      headers = {'Authorization' => authorization('POST', resource_url, params)}
+      url = resource_url + '?' + URI.encode_www_form(params)
+      uri = URI.parse(url)
+      form_data = []
+      data.each{|k,v|
+        form_data << [k,v]
+      }
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      req = Net::HTTP::Post.new(uri.request_uri, headers)
+      req.set_form(form_data, 'multipart/form-data')
+      res = http.start{|h|
+        h.request(req)
+      }
+      Response.new(res)
+    end
+
+    private
+
+    # Returns string of authorization.
+    #
+    # @param method [String] A HTTP method
+    # @param url [String] A URL
+    # @param params [Hash] Parameters
+    # @return [String]
+    def authorization(method, url, params)
+      SimpleOAuth::Header.new(method, url, params, @credentials).to_s
+    end
+
+  end
+
   # A client class.
-  class Client
+  class Client < BaseClient
 
     # Initializes a Client object.
     #
     # @param credentials [Hash] Credentials
     # @return [TwitterAPI::Client]
     def initialize(credentials)
-      @credentials = credentials
+      super
     end
 
     # Calls a Twitter REST API using GET method.
