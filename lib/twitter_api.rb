@@ -99,6 +99,16 @@ module TwitterAPI
       super
     end
 
+    # GET favorites/list
+    # {https://dev.twitter.com/rest/reference/get/favorites/list}
+    #
+    # @param params [Hash] Parameters
+    # @return [TwitterAPI::Response]
+    def favorites_list(params)
+      resource_url = 'https://api.twitter.com/1.1/favorites/list.json'
+      get(resource_url, params)
+    end
+
     # GET geo/id/:place_id
     # {https://dev.twitter.com/rest/reference/get/geo/id/place_id}
     #
@@ -108,7 +118,7 @@ module TwitterAPI
       resource_url = "https://api.twitter.com/1.1/geo/id/#{params['place_id']}.json"
       get(resource_url, params)
     end
- 
+
     # GET search/tweets
     # {https://dev.twitter.com/rest/reference/get/search/tweets}
     #
