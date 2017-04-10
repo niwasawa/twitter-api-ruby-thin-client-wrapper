@@ -63,6 +63,14 @@ describe TwitterAPI::Client do
     expect(t.post(resource_url, params)).not_to be nil
   end
 
+  it 'has a method post_multipart' do
+    resource_url = 'https://upload.twitter.com/1.1/media/upload.json'
+    params = {
+      'media' => '0000000000000000'
+    }
+    expect(t.post_multipart(resource_url, params)).not_to be nil
+  end
+
   it 'has a method favorites_list' do
     params = {
       'user_id' => '0000000000000000'
