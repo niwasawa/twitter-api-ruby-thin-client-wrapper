@@ -119,6 +119,16 @@ module TwitterAPI
       get(resource_url, params)
     end
 
+    # GET direct_messages/show
+    # {https://dev.twitter.com/rest/reference/get/direct_messages/show}
+    #
+    # @param params [Hash] Parameters
+    # @return [TwitterAPI::Response]
+    def direct_messages_show(params)
+      resource_url = 'https://api.twitter.com/1.1/direct_messages/show.json'
+      get(resource_url, params)
+    end
+
     # GET favorites/list
     # {https://dev.twitter.com/rest/reference/get/favorites/list}
     #

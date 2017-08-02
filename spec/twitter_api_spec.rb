@@ -85,6 +85,13 @@ describe TwitterAPI::Client do
     expect(t.direct_messages_sent(params)).not_to be nil
   end
 
+  it 'has a method direct_messages_show' do
+    params = {
+      'id' => '0000000000000000'
+    }
+    expect(t.direct_messages_show(params)).not_to be nil
+  end
+
   it 'has a method favorites_list' do
     params = {
       'user_id' => '0000000000000000'
