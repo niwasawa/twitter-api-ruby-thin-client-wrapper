@@ -159,6 +159,16 @@ module TwitterAPI
       get(resource_url, params)
     end
 
+    # GET statuses/lookup
+    # {https://dev.twitter.com/rest/reference/get/statuses/lookup}
+    #
+    # @param params [Hash] Parameters
+    # @return [TwitterAPI::Response]
+    def statuses_lookup(params)
+      resource_url = 'https://api.twitter.com/1.1/statuses/lookup.json'
+      get(resource_url, params)
+    end
+
     # GET statuses/mentions_timeline
     # {https://dev.twitter.com/rest/reference/get/statuses/mentions_timeline}
     #

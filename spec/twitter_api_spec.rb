@@ -114,6 +114,13 @@ describe TwitterAPI::Client do
     expect(t.search_tweets(params)).not_to be nil
   end
 
+  it 'has a method statuses_lookup' do
+    params = {
+      'id' => '0,1'
+    }
+    expect(t.statuses_lookup(params)).not_to be nil
+  end
+
   it 'has a method statuses_mentions_timeline' do
     params = {
       'count' => '1'
