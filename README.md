@@ -65,11 +65,10 @@ puts JSON.pretty_generate(JSON.parse(res.body))
 
 ## Documentation
 
-Documentation for twitter_api
-http://www.rubydoc.info/gems/twitter_api/
-
-Reference Documentation — Twitter Developers
-https://dev.twitter.com/rest/reference
+- Documentation for twitter_api http://www.rubydoc.info/gems/twitter_api/
+- API reference index — Twitter Developers https://developer.twitter.com/en/docs/api-reference-index
+- Tweet updates — Twitter Developers https://developer.twitter.com/en/docs/tweets/tweet-updates.html
+  - more than 140 characters, tweet_mode=extended, full_text
 
 ## Development
 
