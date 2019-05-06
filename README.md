@@ -35,7 +35,8 @@ t = TwitterAPI::Client.new({
 # call GET statuses/user_timeline
 res = t.get('https://api.twitter.com/1.1/statuses/user_timeline.json', {
   'screen_name' => 'YOUR_SCREEN_NAME',
-  'count' => '1'
+  'count' => '1',
+  'tweet_mode' => 'extended'
 })
 puts res.headers
 puts JSON.pretty_generate(JSON.parse(res.body))
@@ -43,7 +44,8 @@ puts JSON.pretty_generate(JSON.parse(res.body))
 # call GET statuses/user_timeline
 res = t.statuses_user_timeline({
   'screen_name' => 'YOUR_SCREEN_NAME',
-  'count' => '1'
+  'count' => '1',
+  'tweet_mode' => 'extended'
 })
 puts res.headers
 puts JSON.pretty_generate(JSON.parse(res.body))
