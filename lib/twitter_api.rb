@@ -28,7 +28,7 @@ module TwitterAPI
     def get(resource_url, params)
       headers = {'Authorization' => authorization('GET', resource_url, params)}
       url = resource_url + '?' + URI.encode_www_form(params)
-      res = open(url, headers)
+      res = URI.open(url, headers)
       Response.new(res)
     end
 
